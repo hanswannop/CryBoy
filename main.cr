@@ -1,5 +1,8 @@
 require "crsfml"
+require "./src/cry_boy"
 
+abort("No ROM path provided") if ARGV.size == 0
+cry_boy = CryBoy.new ARGV[0]
 SCALE = 4
 
 window = SF::RenderWindow.new(SF::VideoMode.new(160*SCALE, 144*SCALE), "Cry Boy")
@@ -8,27 +11,33 @@ window.key_repeat_enabled = false
 
 noise = Random.new
 
+# Emulation loop
 while window.open?
+  # Handle event & input
   while event = window.poll_event
     case event
       when SF::Event::Closed
         window.close
       when SF::Event::KeyPressed
+	# Update gamepad state
  	puts "code: #{event.code}"
 	puts "control: #{event.control}"
    	puts "alt: #{event.alt}"
     	puts "shift: #{event.shift}"
     	puts "system: #{event.system}"
       when SF::Event::KeyReleased
-        # handle key release
+        # Update gamepad state
       when SF::Event::LostFocus
-	# pause emulation
+	# Pause emulation
       when SF::Event::GainedFocus
-	# resume emulation
+	# Resume emulation
     end
   end
 
-  # Draw the screen
+  # Update system state
+  cry_boy.step
+
+  # Draw
   window.clear(SF::Color::Black)
   pixel = SF::RectangleShape.new(SF.vector2(SCALE, SCALE))
   160.times do |x|
