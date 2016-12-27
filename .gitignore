@@ -1,0 +1,6 @@
+.DS_Store
+crsfml-2.4.3/
+shard.lock
+cryboy
+.shards
+lib

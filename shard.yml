@@ -1,0 +1,7 @@
+name: cryboy
+version: 0.1.0
+
+dependencies:
+  crsfml:
+    github: BlaXpirit/crsfml
+    version: 2.4.3
