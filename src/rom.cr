@@ -3,13 +3,14 @@ class ROM
   @title : String
   @colour : Bool
   @cartridge_type : String
-  @rom_size : Int32
-  @ram_size : Int32
+  @rom_size : UInt32
+  @ram_size : UInt32
   @japanese : Bool
   @version : UInt8
 
+  # Constants for ROM header info 
   TITLE_OFFSET = 0x134
-  TITLE_SIZE = 16
+  TITLE_SIZE = 16_u8
   COLOUR_OFFSET = 0x143
   IS_COLOUR = 0x80
   CARTRIDGE_TYPE_OFFSET = 0x147
@@ -49,34 +50,36 @@ class ROM
   }
 
   ROM_SIZES = {
-    0x00 => 32768,
-	  0x01 => 65536,
-	  0x02 => 131072,
-    0x03 => 262144,
-    0x04 => 524288,
-    0x05 => 1048576,
-    0x06 => 2097152
+    0x00 => 32768_u32,
+	  0x01 => 65536_u32,
+	  0x02 => 131072_u32,
+    0x03 => 262144_u32,
+    0x04 => 524288_u32,
+    0x05 => 1048576_u32,
+    0x06 => 2097152_u32
   }
 
   RAM_SIZES = {
-    0x00 => 0,
-	  0x01 => 2048,
-	  0x02 => 8192,
-    0x03 => 32768,
-    0x04 => 131072
+    0x00 => 0_u32,
+	  0x01 => 2048_u32,
+	  0x02 => 8192_u32,
+    0x03 => 32768_u32,
+    0x04 => 131072_u32
   }
 
   def initialize(path : String)
     @data = load_rom(path)
     @title = String.new(@data[TITLE_OFFSET,TITLE_SIZE])
-    puts @data[COLOUR_OFFSET]
     @colour = @data[COLOUR_OFFSET] == IS_COLOUR
     @cartridge_type = CARTRIDGE_TYPES[@data[CARTRIDGE_TYPE_OFFSET]]
     @rom_size = ROM_SIZES[@data[ROM_SIZE_OFFSET]]
     @ram_size = RAM_SIZES[@data[RAM_SIZE_OFFSET]]
     @japanese = @data[JAPANESE_OFFSET] == 0x0
     @version = @data[VERSION_OFFSET]
-    
+    print_rom_info
+  end
+
+  def print_rom_info
     puts "Title: #{@title}"
     puts "Colour: #{@colour}"
     puts "Cartridge Type: #{@cartridge_type}"
