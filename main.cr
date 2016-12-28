@@ -19,18 +19,18 @@ while window.open?
       when SF::Event::Closed
         window.close
       when SF::Event::KeyPressed
-	# Update gamepad state
- 	puts "code: #{event.code}"
-	puts "control: #{event.control}"
-   	puts "alt: #{event.alt}"
-    	puts "shift: #{event.shift}"
-    	puts "system: #{event.system}"
+	      # Update gamepad state
+ 	      puts "code: #{event.code}"
+	      puts "control: #{event.control}"
+   	    puts "alt: #{event.alt}"
+    	  puts "shift: #{event.shift}"
+    	  puts "system: #{event.system}"
       when SF::Event::KeyReleased
         # Update gamepad state
       when SF::Event::LostFocus
-	# Pause emulation
+	      # Pause emulation
       when SF::Event::GainedFocus
-	# Resume emulation
+	      # Resume emulation
     end
   end
 
