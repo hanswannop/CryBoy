@@ -1,4 +1,9 @@
 class CPU
+
+  # Opcodes
+  # OpcodesCB
+
+
   def initialize(mmu : MMU)
       # Registers
       @a = 0_u8
@@ -12,5 +17,12 @@ class CPU
       @sp = 0_u16 # The stack pointer
       @pc = 0_u16 # The program counter
       @mmu = mmu
+
+      @cycles = 0_u64
   end
+
+  def step
+    opcode = read(@pc)
+  end
+
 end
